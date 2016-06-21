@@ -21,7 +21,9 @@ namespace Search_as_a_service_azure.Controllers
         // GET: Hotels
         public ActionResult Index()
         {
+           
             return View( service.allHotels());
+
         }
 
         public PartialViewResult GetSearchRecord(string ls)
