@@ -1,0 +1,88 @@
+﻿@model IEnumerable<Search_as_a_service_azure.Models.Hotel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.hotelName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.baseRate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.category)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.parkingIncluded)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lastRenovationDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.rating)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.hotelName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.baseRate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.category)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.parkingIncluded)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lastRenovationDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.rating)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.hotelId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.hotelId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.hotelId })
+        </td>
+    </tr>
+}
+
+</table>
+
+<div id="search">
+
+</div>
+
+
+<input type="button" id="Searchbtn" />
+@section Scripts{
+    <script type="text/javascript">
+        $("#Searchbtn").on("click", function () {
+            $.ajax({
+                url: "GetSearchRecord",
+                method: "get",
+                success: function (data) {
+                    $("#search").html(data)
+                }
+            })
+
+        });
+
+      
+    </script>
+
+
+}
