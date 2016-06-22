@@ -24,9 +24,17 @@ namespace Search_as_a_service_azure.Controllers
             return View( service.allHotels());
         }
 
-        public PartialViewResult GetSearchRecord(string ls)
+        public PartialViewResult GetSearchRecord(string searchtxt)
         {
-            return PartialView("_FTSearch", service.SearchDocuments(service.getIndexClient(), searchText: "fancy wifi"));
+            if (service.SearchDocuments(service.getIndexClient(), searchText: searchtxt).Count > 1)
+            {
+                return PartialView("_FTSearch", service.SearchDocuments(service.getIndexClient(), searchText: searchtxt));
+            }
+            else
+            {
+                return PartialView("_FTSearch", string.Empty);
+            }
+
         }
 
         // GET: Hotels/Details/5

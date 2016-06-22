@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Search_as_a_service_azure.Models.Hotel>
 
 
-<table class="table">
+<table class="table table-condensed">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.hotelName)
@@ -46,9 +46,9 @@
                 @Html.DisplayFor(modelItem => item.rating)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.hotelId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.hotelId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.hotelId })
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.hotelId }, htmlAttributes: new { @class = "btn btn-warning" }) |
+                @Html.ActionLink("Details", "Details", new { id = item.hotelId }, htmlAttributes: new { @class = "btn btn-success" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.hotelId }, htmlAttributes: new { @class = "btn btn-danger" })*@
             </td>
         </tr>
     }

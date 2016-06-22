@@ -5,11 +5,13 @@
 }
 
 <h2>Index</h2>
+<head>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+    <link href="~/Content/jquery.progressTimer.css" rel="stylesheet" />
+
+</head>
+
+<table class="table table-condensed">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.hotelName)
@@ -32,56 +34,90 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.hotelName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.baseRate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.category)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.parkingIncluded)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.lastRenovationDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.rating)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.hotelId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.hotelId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.hotelId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.hotelName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.baseRate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.parkingIncluded)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.lastRenovationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.rating)
+            </td>
+            <td>
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.hotelId }, htmlAttributes: new { @class = "btn btn-warning" }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.hotelId }, htmlAttributes: new { @class = "btn btn-success" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.hotelId }, htmlAttributes: new { @class = "btn btn-danger" })*@
+            </td>
+        </tr>
+    }
 
 </table>
 
-<div id="search">
-
-</div>
 
 
-<input type="button" id="Searchbtn" />
-@section Scripts{
+<span class="form-inline">
+    <input type="button" id="Searchbtn" value="Search" class="btn" /> <input type="text" id="txtsearch" class="form-control" />
+</span>
+
+<h2>Search Results</h2>
+<div class="loading-progress" id="pbar"></div>
+<div id="search"></div>
+
+     @section Scripts{
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.progressTimer.js"></script>
+
     <script type="text/javascript">
+
+
+
+
         $("#Searchbtn").on("click", function () {
+            var progress = $(".loading-progress").progressTimer({
+                timeLimit: 10,
+                onFinish: function () {
+                   // alert('completed!');
+                }
+            });
             $.ajax({
                 url: "GetSearchRecord",
+                beforeSend: function () {
+                    $("#search").html("");
+                },
+                data: { searchtxt: $('#txtsearch').val() },
                 method: "get",
                 success: function (data) {
-                    $("#search").html(data)
+                    $("#search").html(data);
+                    progress.progressTimer('complete');
+
+                },
+                error: function () {
+                    progress.progressTimer('error',
+                        {
+                            errorText: 'ERROR!',
+                            onFinish: function () {
+                                //alert('There was an error processing your information!');
+                            }
+                        });
+                    $("#search").html("No records found");
                 }
             })
 
         });
 
-      
+
     </script>
 
 
