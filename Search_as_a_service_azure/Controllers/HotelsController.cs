@@ -26,16 +26,14 @@ namespace Search_as_a_service_azure.Controllers
 
         public PartialViewResult GetSearchRecord(string searchtxt)
         {
-            if (service.SearchDocuments(service.getIndexClient(), searchText: searchtxt).Count > 1)
-            {
-                return PartialView("_FTSearch", service.SearchDocuments(service.getIndexClient(), searchText: searchtxt));
-            }
-            else
-            {
-                return PartialView("_FTSearch", string.Empty);
-            }
+               string[] filterarray={"eq","lt","gt"};
 
+               if (filterarray.Any(s=>s.Equals(searchtxt)))
+                return PartialView("_FTSearch", service.SearchDocuments(service.getIndexClient(), searchText: "*", filter: "category eq 'Luxury'"));
+               else  
+                 return PartialView("_FTSearch", service.SearchDocuments(service.getIndexClient(), searchText: searchtxt));
         }
+
 
         // GET: Hotels/Details/5
         public ActionResult Details(int id)

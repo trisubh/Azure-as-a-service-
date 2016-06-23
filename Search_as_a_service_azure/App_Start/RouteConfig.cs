@@ -16,7 +16,7 @@ namespace Search_as_a_service_azure
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Hotels", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

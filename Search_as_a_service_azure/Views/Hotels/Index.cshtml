@@ -67,13 +67,19 @@
 
 
 
+
 <span class="form-inline">
-    <input type="button" id="Searchbtn" value="Search" class="btn" /> <input type="text" id="txtsearch" class="form-control" />
+    <input type="button" id="Searchbtn" value="Search" class="btn" /> <input type="text" id="txtsearch" class="form-control" /> 
 </span>
+<br />
+examples like "Motel",category eq 'Luxary'
 
 <h2>Search Results</h2>
 <div class="loading-progress" id="pbar"></div>
 <div id="search"></div>
+
+
+
 
      @section Scripts{
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
@@ -92,7 +98,7 @@
                 }
             });
             $.ajax({
-                url: "GetSearchRecord",
+                url: "Hotels/GetSearchRecord",
                 beforeSend: function () {
                     $("#search").html("");
                 },
@@ -103,14 +109,15 @@
                     progress.progressTimer('complete');
 
                 },
-                error: function () {
+                error: function (jqXHr,error,errorThrown) {
                     progress.progressTimer('error',
                         {
                             errorText: 'ERROR!',
                             onFinish: function () {
-                                //alert('There was an error processing your information!');
+                                alert("ResponseText:"+jqXHr.responseText + " <br/>Status" + jqXHr.status+"<br/>StatusText:"+jqXHr.statusText);
                             }
                         });
+                    //alert("ResponseText:" + jqXHr.responseText + " <br/>Status" + jqXHr.status + "<br/>StatusText:" + jqXHr.statusText);
                     $("#search").html("No records found");
                 }
             })
